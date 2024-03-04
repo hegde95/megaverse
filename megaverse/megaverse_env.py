@@ -1,8 +1,9 @@
 import cv2
-import gym
+# import gym
+import gymnasium
 import numpy as np
 
-from gym.spaces import Discrete
+from gymnasium.spaces import Discrete
 
 # noinspection PyUnresolvedReferences
 from megaverse.extension.megaverse import MegaverseGym, set_megaverse_log_level
@@ -39,7 +40,7 @@ def make_env_multitask(multitask_name, task_idx, num_envs, num_agents_per_env, n
     return MegaverseEnv(scenario, num_envs, num_agents_per_env, num_simulation_threads, use_vulkan, params)
 
 
-class MegaverseEnv(gym.Env):
+class MegaverseEnv(gymnasium.Env):
     def __init__(self, scenario_name, num_envs, num_agents_per_env, num_simulation_threads, use_vulkan=False, params=None):
         scenario_name = scenario_name.casefold()
         self.scenario_name = scenario_name
@@ -78,7 +79,7 @@ class MegaverseEnv(gym.Env):
         self.default_shaping_scheme = self.env.get_reward_shaping(0, 0)
 
         self.action_space = self.generate_action_space(self.env.action_space_sizes())
-        self.observation_space = gym.spaces.Box(0, 255, (self.channels, self.img_h, self.img_w), dtype=np.uint8)
+        self.observation_space = gymnasium.spaces.Box(0, 255, (self.channels, self.img_h, self.img_w), dtype=np.uint8)
 
     @staticmethod
     def generate_action_space(action_space_sizes):
@@ -108,7 +109,7 @@ class MegaverseEnv(gym.Env):
         # ]
 
         spaces = [Discrete(sz) for sz in action_space_sizes]
-        space = gym.spaces.Tuple(spaces)
+        space = gymnasium.spaces.Tuple(spaces)
         return space
 
     def seed(self, seed=None):

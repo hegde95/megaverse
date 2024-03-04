@@ -134,6 +134,12 @@ Then, to train agents in the TowerBuilding environment, execute:
 python -m megaverse_rl.train_megaverse --train_for_seconds=360000000 --train_for_env_steps=2000000000 --algo=APPO --gamma=0.997 --use_rnn=True --rnn_num_layers=2 --num_workers=8 --num_envs_per_worker=2 --num_epochs=1 --rollout=32 --recurrence=32 --batch_size=4096 --actor_worker_gpus 0 --num_policies=1 --with_pbt=False --max_grad_norm=0.0 --exploration_loss=symmetric_kl --exploration_loss_coeff=0.001 --megaverse_num_simulation_threads=1 --megaverse_num_envs_per_instance=48 --megaverse_num_agents_per_env=1 --megaverse_use_vulkan=True --policy_workers_per_policy=2 --reward_clip=30 --env=TowerBuilding --experiment=TowerBuilding
 ```
 
+Train in sync and serial mode:
+```
+python -m megaverse_rl.train_megaverse --train_for_seconds=360000000 --train_for_env_steps=2000000000 --algo=APPO --gamma=0.997 --use_rnn=True --rnn_num_layers=2 --num_workers=1 --rollout=32 --recurrence=32 --batch_size=4096 --actor_worker_gpus 0 --num_policies=1 --with_pbt=False --max_grad_norm=0.0 --exploration_loss=symmetric_kl --exploration_loss_coeff=0.001 --megaverse_num_simulation_threads=128 --megaverse_num_envs_per_instance=1024 --megaverse_num_agents_per_env=1 --megaverse_use_vulkan=True --policy_workers_per_policy=1 --reward_clip=30 --env=TowerBuilding --experiment=TowerBuilding_serial --serial_mode True --async_rl False --num_envs_per_worker=1  --worker_num_splits 1 --batched_sampling True --num_batches_per_epoch 8 --num_epochs 2
+
+```
+
 Observe the behavior of agents by running:
 
 ```

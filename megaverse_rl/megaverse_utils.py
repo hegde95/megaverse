@@ -1,6 +1,6 @@
 from typing import Optional
 
-import gym
+import gymnasium as gym
 from megaverse.megaverse_env import MegaverseEnv, make_env_multitask
 
 from sample_factory.envs.env_utils import RewardShapingInterface, TrainingInfoInterface
@@ -52,7 +52,7 @@ class Wrapper(gym.Wrapper, RewardShapingInterface, TrainingInfoInterface):
         return self.env.unwrapped.get_current_reward_shaping(agent_idx)
 
     def set_reward_shaping(self, reward_shaping: dict, agent_idx: int):
-        return self.env.unwrapped.set_reward_shaping(reward_shaping, agent_idx)
+        return self.env.unwrapped.set_reward_shaping(reward_shaping, 0)
 
     def reset(self, **kwargs):
         self.episode_rewards = [0] * self.num_agents
